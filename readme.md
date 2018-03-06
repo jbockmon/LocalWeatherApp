@@ -1,0 +1,1 @@
+This app was intially a project from the Free Code Camp front end developer list of projects. The initial commit is in working form, however, it was made to look like a phone widget or application. The goal is to add more information, make it reactive, and change the overall aesthetic to something more pleasing for a desktop experience.
