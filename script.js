@@ -76,9 +76,8 @@ function setBackground() {
 
         }
     }
+    $('body').css('background', 'url(' + imageString + ') no-repeat center center fixed');
     
-    $('.container').css('background', 'url(' + imageString + ') no-repeat');
-    $('.container').css('background-size', 'cover');
 }
 
 function isDay() {
