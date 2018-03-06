@@ -1,0 +1,72 @@
+body {
+    background-color:  #fef9e7;
+    visibility: hidden;
+}
+
+header h1 {
+    color:  #566573;
+    text-align: center;
+}
+
+section .container{
+    width: 50%;
+    min-width: 400px;
+    min-height: 300px;
+    margin: auto;
+
+    
+    background-size: cover;
+    
+    border-width: 10px;
+    border-radius: 10px;
+    border: 3px solid black;
+}
+
+section #infoWrapper{
+    color: white;
+    text-shadow: 2px 2px black;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20pt;
+    background: rgba(35, 35, 35, 0.3);
+    width: 50%;
+    padding-top: 1em;
+    margin: auto;
+    margin-top: 2em;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+section #hiLoWrapper{
+    display: inline-block;
+}
+
+section #temperature {
+    text-align: center;
+    font-size: 30pt;
+    font-weight: bold;
+    display: inline-block;
+}
+
+section #highTemp {
+    text-align: center;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+section #lowTemp {
+    text-align: center;
+    font-size: 12pt;
+    font-weight: bold;
+   
+}
+
+section #updateTime{
+    width: 50%;
+    min-width: 400px;
+    margin: auto;
+    text-align: right;
+
+}
+
+
