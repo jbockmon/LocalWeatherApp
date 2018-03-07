@@ -17,17 +17,19 @@ $(document).ready(function(){
 function getData() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            $.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&appid=f0dff5a92e27f8e2c49b5fa24a3a719b&units=imperial",gotData);    
-    })
+            $.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&appid=f0dff5a92e27f8e2c49b5fa24a3a719b&units=imperial",gotWeatherData);    
+            $.getJSON("https://api.openweathermap.org/data/2.5/forecast?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&appid=f0dff5a92e27f8e2c49b5fa24a3a719b&units=imperial",gotForecastData);    
+
+        })
     } else {
         console.log("Geolocation not available.")
     }
 };
 
-function gotData(data) {
+function gotWeatherData(data) {
     weatherData = data;
 console.log(data);
-    $("#cityName").html(data.name);
+    $("h1").html(data.name);
     $("#temperature").html(parseInt(data.main.temp) + "°F");
     $("#highTemp").html(parseInt(data.main.temp_max));
     $("#lowTemp").html(parseInt(data.main.temp_min));
@@ -37,6 +39,10 @@ console.log(data);
 
     setBackground();
     $("body").css('visibility', 'visible');
+}
+
+function gotForecastData(data) {
+    console.log(data);
 }
 
 
@@ -76,12 +82,18 @@ function setBackground() {
 
         }
     }
-    $('body').css('background', 'url(' + imageString + ') no-repeat center center fixed');
+
+    $('body').css('background', 'url(' + imageString + ') no-repeat');
+    $('body').css('background-size', '100% auto');
+ 
     
 }
 
 function isDay() {
-    if( (date.getTime() > weatherData.sys.sunrise) && ((date.getTime()/1000) < weatherData.sys.sunset) ) {
+    console.log(date.getTime()/1000);
+    console.log(weatherData.sys.sunrise);
+    console.log(weatherData.sys.sunset);
+    if( (date.getTime()/1000 > weatherData.sys.sunrise) && ((date.getTime()/1000) < weatherData.sys.sunset) ) {
         return true;
     } else return false;
 }
