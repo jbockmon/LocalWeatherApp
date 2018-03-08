@@ -29,7 +29,7 @@ function getData() {
 function gotWeatherData(data) {
     weatherData = data;
 console.log(data);
-    $("h1").html(data.name);
+    $("#cityName").html(data.name);
     $("#temperature").html(parseInt(data.main.temp) + "°F");
     $("#highTemp").html(parseInt(data.main.temp_max));
     $("#lowTemp").html(parseInt(data.main.temp_min));
@@ -83,19 +83,16 @@ function setBackground() {
         }
     }
 
-    $('body').css('background', 'url(' + imageString + ') no-repeat');
-    $('body').css('background-size', '100% auto');
- 
-    
+   $('body').css('background-image', 'url(' + imageString + ')');   
 }
 
 function isDay() {
-    console.log(date.getTime()/1000);
-    console.log(weatherData.sys.sunrise);
-    console.log(weatherData.sys.sunset);
     if( (date.getTime()/1000 > weatherData.sys.sunrise) && ((date.getTime()/1000) < weatherData.sys.sunset) ) {
         return true;
-    } else return false;
+    } else {
+        $('#updateTime').css('color', 'white');
+        return false;
+    } 
 }
 
 function isFreezing() {
