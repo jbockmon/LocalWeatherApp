@@ -1,10 +1,9 @@
-var date;
+var date, sunrise, sunset;
 var weatherData;
 var units = "imp";
 
 
 $(document).ready(function(){
-    date = new Date();
     getData();
 
     
@@ -29,13 +28,24 @@ function getData() {
 function gotWeatherData(data) {
     weatherData = data;
 console.log(data);
+    date = new Date(); 
+    sunrise = new Date(data.sys.sunrise * 1000);
+    sunset = new Date(data.sys.sunset * 1000);
+    console.log(sunrise.toLocaleTimeString());
+    console.log(sunset.toLocaleTimeString());
+
     $("#cityName").html(data.name);
     $("#temperature").html(parseInt(data.main.temp) + "°F");
     $("#highTemp").html(parseInt(data.main.temp_max));
     $("#lowTemp").html(parseInt(data.main.temp_min));
     $("#data").html(data.weather[0].main);
     $("#data").append("<br><img src=https://openweathermap.org/img/w/" + weatherData.weather[0].icon + ".png></img>" );
-    $("#updateTime").html("<br>Last updated: " + lastUpdated());
+    $("#updateTime").html("<br>Last updated: " + date.toLocaleTimeString());
+    $("#humidityDiv").append(data.main.humidity);
+    $("#pressureDiv").append(data.main.pressure);
+    $("#coordsDiv").append(data.coord.lat + "<br>" + data.coord.lon);
+    $("#sunDiv").append(sunrise.toLocaleTimeString() + "<br>" + sunset.toLocaleTimeString());
+    $("#windDiv").append(data.wind.deg + "<br>" + data.wind.speed);
 
     setBackground();
     $("body").css('visibility', 'visible');
@@ -90,7 +100,9 @@ function isDay() {
     if( (date.getTime()/1000 > weatherData.sys.sunrise) && ((date.getTime()/1000) < weatherData.sys.sunset) ) {
         return true;
     } else {
+        //night mode for dark backgrounds
         $('#updateTime').css('color', 'white');
+        $('#infoWrapper').css('background', 'rgba(255, 255, 255, 0.05)');
         return false;
     } 
 }
