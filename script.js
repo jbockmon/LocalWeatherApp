@@ -21,7 +21,9 @@ function getData() {
 
         })
     } else {
-        console.log("Geolocation not available.")
+        console.log("boop")
+        $("body").css('visibility', 'visible');
+        $("body").html("Geolocation not available.");
     }
 };
 
