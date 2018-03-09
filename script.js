@@ -27,12 +27,9 @@ function getData() {
 
 function gotWeatherData(data) {
     weatherData = data;
-console.log(data);
     date = new Date(); 
     sunrise = new Date(data.sys.sunrise * 1000);
     sunset = new Date(data.sys.sunset * 1000);
-    console.log(sunrise.toLocaleTimeString());
-    console.log(sunset.toLocaleTimeString());
 
     $("#cityName").html(data.name);
     $("#temperature").html(parseInt(data.main.temp) + "°F");
@@ -41,11 +38,11 @@ console.log(data);
     $("#data").html(data.weather[0].main);
     $("#data").append("<br><img src=https://openweathermap.org/img/w/" + weatherData.weather[0].icon + ".png></img>" );
     $("#updateTime").html("<br>Last updated: " + date.toLocaleTimeString());
-    $("#humidityDiv").append(data.main.humidity);
-    $("#pressureDiv").append(data.main.pressure);
-    $("#coordsDiv").append(data.coord.lat + "<br>" + data.coord.lon);
+    $("#humidityDiv").append(data.main.humidity + "%");
+    $("#pressureDiv").append(data.main.pressure + " mb");
+    $("#coordsDiv").append("lat: " + data.coord.lat + "<br>" + "lon: " + data.coord.lon);
     $("#sunDiv").append(sunrise.toLocaleTimeString() + "<br>" + sunset.toLocaleTimeString());
-    $("#windDiv").append(data.wind.deg + "<br>" + data.wind.speed);
+    $("#windDiv").append(+ data.wind.speed + " mph <br>" + convertWindDir(data.wind.deg)  );
 
     setBackground();
     $("body").css('visibility', 'visible');
@@ -126,13 +123,6 @@ function isRaining() {
 
 }
 
-function lastUpdated() {
-    var hours = date.getHours();
-    var minutes = "0" + date.getMinutes();
-    var formattedTime = hours + ':' + minutes.substr(-2);
-
-    return (formattedTime);
-}
 
 function convertTemp() {
     if( units == "imp"){
@@ -146,6 +136,19 @@ function convertTemp() {
         $("#highTemp").html(parseInt(weatherData.main.temp_max));
         $("#lowTemp").html(parseInt(weatherData.main.temp_min));
     }
+}
+
+function convertWindDir(direction) {
+    // indexed table of directions with 16 directions
+    var windDir = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", 
+        "W", "WNW", "NW", "NNW", "N"];
+
+    // ensure degrees are <= 360
+    direction = direction % 360;
+
+    // 16 directions over 360 degrees = 22.5 degrees per direction
+    var arrIndex = ~~(direction / 22.5);
+    return windDir[arrIndex];
 }
 
 
